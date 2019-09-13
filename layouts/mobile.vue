@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex">
+  <div style="">
     <Auth />
     <nuxt />
   </div>
@@ -7,7 +7,7 @@
 <script>
 export default {
   components: {
-    Auth: () => import('~/components/auth/desktop/Auth')
+    Auth: () => import('~/components/auth/mobile/Auth')
   }
 }
 </script>
