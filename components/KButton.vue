@@ -13,12 +13,13 @@ export default {
         },
         attrs: {
           'aria-label': `Botão ${props.label}`,
-          title: `Ação de ${props.label}`
+          title: `Ação de ${props.label}`,
+          disabled: !!props.disabled
         },
         on: {
           click: (event) => {
             console.log('Click ', props.label)
-            // listeners.click(event.target.value)
+            listeners.click(event)
           }
         }
       },
@@ -36,6 +37,11 @@ button
   box-shadow 5px 4px 9px rgba(143, 113, 255, 0.37)
   color white
   margin 10px 0
+
+  &:disabled
+    background #b4b4e08c
+    color #0000008f
+    box-shadow none
 
   &:active
     background white

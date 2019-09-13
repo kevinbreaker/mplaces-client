@@ -2,11 +2,32 @@
 export default {
   name: 'KInput',
   functional: true,
+  props: {
+    value: {
+      type: String,
+      required: true,
+      default: () => 'Report error'
+    },
+    label: {
+      type: String,
+      required: true,
+      default: () => 'Report error'
+    },
+    type: {
+      type: String,
+      default: () => 'Text'
+    },
+    key: {
+      type: [Number, String],
+      default: () => 1
+    }
+  },
   render(h, { props, listeners, children, slots }) {
     return h(
       'label',
       {
         attrs: {
+          key: props.key,
           'aria-label': `Campo de ${props.label}`,
           title: `Preencha este campo com ${props.label}`
         }
@@ -48,22 +69,6 @@ export default {
         h('span', {}, props.label)
       ]
     )
-  },
-  props: {
-    value: {
-      type: String,
-      required: true,
-      default: () => 'Report error'
-    },
-    label: {
-      type: String,
-      required: true,
-      default: () => 'Report error'
-    },
-    type: {
-      type: String,
-      default: () => 'Text'
-    }
   }
 }
 </script>

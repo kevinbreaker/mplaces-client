@@ -18,14 +18,14 @@
 
 <script>
 export default {
-  data: () => ({
-    texto: '',
-    outro: ''
-  }),
   components: {
     KInput: () => import('~/components/Kinput'),
     KButton: () => import('~/components/KButton')
-  }
+  },
+  data: () => ({
+    texto: '',
+    outro: ''
+  })
 }
 </script>
 <style lang="stylus" scoped>

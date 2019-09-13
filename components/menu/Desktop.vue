@@ -1,7 +1,7 @@
 <template>
   <section class="aside-auth">
     <section class="aside-auth__logo">
-      <img src="~~/assets/logo-animated.svg" />
+      <k-input label="buscar"></k-input>
     </section>
     <section class="aside-auth__inputs">
       <template v-if="hasAccount">
@@ -65,7 +65,7 @@ img
   // width 30vw
   // min-width 300px
   // max-width 400px
-  background #2D3B3C
+  background red
   display grid
   grid-template-rows repeat(3, 2fr) 1fr
   height 100%
