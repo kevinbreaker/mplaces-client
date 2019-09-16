@@ -10,8 +10,8 @@
     <GmapMarker
       v-for="(m, index) in userFavorites"
       :key="index"
-      :icon="require('~/assets/heart.svg')"
       :ref="`markers-${index}`"
+      :icon="require('~/assets/heart.svg')"
       :position="{ lat: +m.lat, lng: +m.lng }"
       :clickable="true"
       :draggable="true"
@@ -26,23 +26,7 @@ export default {
   middleware: 'auth',
   mixins: [gMapMixin],
   data: () => ({
-    position: {
-      lat: 10,
-      lng: 100
-    },
-    favorites: [
-      {
-        name: 'mesa',
-        position: {
-          lat: -8.039719,
-          lng: -34.92046749999997
-        }
-      }
-    ],
-    selectedComponent: 'search',
-    selectedPlace: '',
     reviews: [],
-    comment: '',
     infoPosition: null,
     infoContent: null,
     infoOpened: false,
@@ -73,8 +57,6 @@ export default {
   methods: {
     getInfo({ latLng, placeId, infoText, ta, xa, pixel }) {
       if (!latLng && !placeId) return
-      const apoha = this.google.maps
-      console.log(apoha)
       const map = this.$refs.mapRef.$mapObject
       const service = new this.google.maps.places.PlacesService(map)
       service.getDetails(
@@ -106,7 +88,6 @@ export default {
           },
           status
         ) => {
-          console.log(name, address, status)
           const photosUrl = photos ? photos.map((photo) => photo.getUrl()) : []
           this.$store.dispatch('SET_CURRENT_LOCATION', {
             lat: location.lat(),
@@ -128,22 +109,21 @@ export default {
           })
         }
       )
-      this.position.lat = latLng.lat()
-      this.position.lng = latLng.lng()
       this.$store.dispatch('SET_CURRENT_LOCATION', {
         lat: latLng.lat(),
         lng: latLng.lng()
       })
-      this.infoContent = 'oi'
-      this.infoPosition = this.position
+      this.infoContent = 'test content'
+      this.infoPosition = {
+        lat: latLng.lat(),
+        lng: latLng.lng()
+      }
     },
     clickMark(place) {
       if (!place) return
-      this.position = place.position
       if (place.id) this.getPlaceInfo(place)
     },
     setUserPosition(position) {
-      console.log('posição ', position)
       this.$store.dispatch('SET_CURRENT_LOCATION', {
         lat: position.coords.latitude,
         lng: position.coords.longitude

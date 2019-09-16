@@ -15,8 +15,6 @@ export const mutations = {
     state.favorites = favorites
   },
   COMMIT_FAVORITES(state, data) {
-    console.log(' AQUI oH ', state.favorites)
-    console.log('hey ', data)
     state.favorites = data
   },
   COMMIT_ORIGIN_ROUTE(state, data) {
