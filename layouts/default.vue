@@ -1,16 +1,18 @@
 <template>
   <div style="display: flex">
     <aside class="aside-menu">
-      <Auth v-if="$store.state.user.name" />
+      <Auth v-if="!$store.state.user.token" />
       <Menu v-else />
     </aside>
+    <k-dialog v-if="$store.state.dialogRouter" />
     <nuxt />
   </div>
 </template>
 <script>
 export default {
   components: {
-    Auth: () => import('~/components/auth/desktop/Auth'),
+    KDialog: () => import('~/components/KDialog'),
+    Auth: () => import('~/components/auth/DesktopAuth'),
     Menu: () => import('~/components/menu/Desktop')
   }
 }
@@ -25,9 +27,5 @@ html
   padding 0
 
 .aside-menu
-  width 30vw
-  min-width 320px
-  max-width 400px
-  // background #2D3B3C
-  // display grid
+  width 400px
 </style>

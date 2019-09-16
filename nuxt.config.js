@@ -27,7 +27,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/vuexPersist', ssr: false },
+    { src: '~/plugins/googleMaps', ssr: true }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -41,13 +44,19 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/toast'
   ],
+  toast: {
+    position: 'top-center'
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:3333/'
+  },
   /*
    ** Build configuration
    */
@@ -55,6 +64,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    transpile: [/^vue2-google-maps($|\/)/],
     extend(config, ctx) {}
   }
 }

@@ -49,7 +49,7 @@ export default {
         }),
         h('img', {
           style: {
-            display: props.type === 'password' ? 'block' : 'none'
+            display: props.type === 'password' ? 'none' : 'none' // Depois consertar
           },
           on: {
             click() {

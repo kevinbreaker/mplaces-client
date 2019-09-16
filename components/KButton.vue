@@ -18,7 +18,6 @@ export default {
         },
         on: {
           click: (event) => {
-            console.log('Click ', props.label)
             listeners.click(event)
           }
         }

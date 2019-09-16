@@ -16,7 +16,7 @@
     </section>
     <section class="aside-auth__buttons">
       <template v-if="hasAccount">
-        <k-button label="entrar" />
+        <k-button label="entrar" @click="Login" />
         <k-button
           label="registrar"
           :outlined="true"
@@ -24,7 +24,7 @@
         />
       </template>
       <template v-else>
-        <k-button label="registrar" :disabled="isFormLoginValid" />
+        <k-button label="registrar" @click="Register" />
         <k-button
           label="login"
           :outlined="true"
@@ -37,10 +37,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
+  name: 'AuthenticatePage',
   components: {
-    KInput: () => import('~/components/Kinput'),
-    KButton: () => import('~/components/KButton')
+    KInput: () => import('@/components/Kinput'),
+    KButton: () => import('@/components/KButton')
   },
   data: () => ({
     hasAccount: true,
@@ -48,9 +50,51 @@ export default {
     name: '',
     password: ''
   }),
-  computed: {
-    isFormLoginValid() {
-      return true
+  methods: {
+    ...mapActions({ setData: 'user/SET_USER_DATA' }),
+    Login() {
+      this.$axios
+        .post('/login', { email: this.email, password: this.password })
+        .then(({ data }) => {
+          this.setData({ token: data.token, ...data.user })
+          this.$toast.success('Seja bem-vindo!', { duration: 4000 })
+          this.$axios.setToken(data.token, 'Bearer')
+          this.$router.push('/app')
+        })
+        .catch((er) => {
+          this.$toast.error(
+            'Erro ao fazer login, verifique se seus dados estão corretos.',
+            { duration: 4000 }
+          )
+        })
+    },
+    Register() {
+      this.$axios
+        .post('/register', {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        })
+        .then(({ data }) => {
+          this.$toast.success('Conta criada com sucesso!', { duration: 4000 })
+          this.hasAccount = !this.hasAccount
+        })
+        .catch((er) => {
+          this.$toast.error('Erro ao fazer cadastro!', { duration: 4000 })
+        })
+        .finally(() => {
+          this.name = ''
+          this.email = ''
+          this.password = ''
+        })
+    }
+  },
+
+  watch: {
+    hasAccount() {
+      this.name = ''
+      this.email = ''
+      this.password = ''
     }
   }
 }
