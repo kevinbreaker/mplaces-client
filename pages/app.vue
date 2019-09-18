@@ -26,19 +26,6 @@ export default {
   middleware: 'auth',
   mixins: [gMapMixin],
   data: () => ({
-    position: {
-      lat: 10,
-      lng: 100
-    },
-    favorites: [
-      {
-        name: 'mesa',
-        position: {
-          lat: -8.039719,
-          lng: -34.92046749999997
-        }
-      }
-    ],
     selectedComponent: 'search',
     selectedPlace: '',
     reviews: [],
@@ -128,18 +115,16 @@ export default {
           })
         }
       )
-      this.position.lat = latLng.lat()
-      this.position.lng = latLng.lng()
+
       this.$store.dispatch('SET_CURRENT_LOCATION', {
         lat: latLng.lat(),
         lng: latLng.lng()
       })
       this.infoContent = 'oi'
-      this.infoPosition = this.position
+      this.infoPosition = { lat: latLng.lat(), lng: latLng.lng() }
     },
     clickMark(place) {
       if (!place) return
-      this.position = place.position
       if (place.id) this.getPlaceInfo(place)
     },
     setUserPosition(position) {
