@@ -1,10 +1,12 @@
 <template>
   <div style="display: flex">
     <aside class="aside-menu">
-      <Auth v-if="!$store.state.user.token" />
+      <Auth v-if="!$store.getters['user/IS_AUTHENTICATED']" />
       <Menu v-else />
     </aside>
-    <k-dialog v-if="$store.state.dialogRouter" />
+    <k-dialog v-if="$store.getters['DIALOG_ROUTER']" />
+    <k-profile v-if="$store.getters['DIALOG_PROFILE']" />
+
     <nuxt />
   </div>
 </template>
@@ -12,6 +14,7 @@
 export default {
   components: {
     KDialog: () => import('~/components/KDialog'),
+    KProfile: () => import('~/components/KProfile'),
     Auth: () => import('~/components/auth/DesktopAuth'),
     Menu: () => import('~/components/menu/Desktop')
   }

@@ -2,10 +2,10 @@
   <div>
     <img
       v-for="(star, idx) in content"
-      width="30px"
-      :src="star"
       :key="idx"
-      alt=""
+      :src="star"
+      alt="Star rating"
+      width="30px"
     />
   </div>
 </template>

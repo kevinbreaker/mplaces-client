@@ -2,6 +2,12 @@
 export default {
   name: 'KButton',
   functional: true,
+  // props: {
+  //   width: {
+  //     type: String,
+  //     default: () => ''
+  //   }
+  // },
   render(h, { props, listeners, children, slots }) {
     return h(
       'button',
@@ -10,6 +16,9 @@ export default {
           outlined: !!props.outlined,
           filled: !props.outlined,
           dark: !!props.dark
+        },
+        style: {
+          minWidth: props.width ? props.width : '260px'
         },
         attrs: {
           'aria-label': `Botão ${props.label}`,

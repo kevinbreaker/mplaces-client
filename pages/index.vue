@@ -4,11 +4,17 @@
 
 <script>
 export default {
-  layout({ store, req }) {
-    const isMobile = req.headers['user-agent'].includes('Mobile')
-    store.dispatch('VERIFY_DEVICE', isMobile)
+  layout({ isServer, store, req }) {
+    if (isServer) {
+      const isMobile = req.headers['user-agent'].includes('Mobile')
+      store.dispatch('VERIFY_DEVICE', isMobile)
 
-    return isMobile ? 'mobile' : 'default'
+      return isMobile ? 'mobile' : 'default'
+    }
+  },
+
+  mounted() {
+    console.log(this.$route.name)
   }
 }
 </script>

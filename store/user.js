@@ -2,16 +2,19 @@ export const state = () => ({
   token: '',
   name: '',
   email: '',
+  picture: '',
   favorites: [],
+  myReviews: [],
   origin: {},
   destination: {}
 })
 
 export const mutations = {
-  COMMIT_USER_DATA(state, { token, name, email, favorites }) {
+  COMMIT_USER_DATA(state, { token, name, email, favorites, picture }) {
     state.token = token
     state.name = name
     state.email = email
+    state.picture = picture
     state.favorites = favorites
   },
   COMMIT_FAVORITES(state, data) {
@@ -22,6 +25,14 @@ export const mutations = {
   },
   COMMIT_DESTINATION_ROUTE(state, data) {
     state.destination = data
+  },
+  CLEAR_DATA(state) {
+    state.token = ''
+    state.name = ''
+    state.email = ''
+    state.favorites = []
+    state.origin = {}
+    state.destination = {}
   }
 }
 
@@ -37,11 +48,16 @@ export const actions = {
   },
   SET_DESTINATION_ROUTE({ commit }, data) {
     commit('COMMIT_DESTINATION_ROUTE', data)
+  },
+  LOGOUT({ commit }) {
+    commit('CLEAR_DATA')
   }
 }
 
 export const getters = {
   USER_PROFILE: ({ name, email }) => ({ name, email }),
   USER_FAVORITES: ({ favorites }) => ({ ...favorites }),
-  GET_COORDS_FOR_ROUTE: ({ origin, destination }) => ({ origin, destination })
+  USER_REVIEWS: ({ myReviews }) => ({ ...myReviews }),
+  GET_COORDS_FOR_ROUTE: ({ origin, destination }) => ({ origin, destination }),
+  IS_AUTHENTICATED: ({ name, token }) => !!name && !!token
 }

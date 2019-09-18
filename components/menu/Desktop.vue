@@ -2,14 +2,14 @@
   <section class="aside-menu">
     <section class="aside-menu__search">
       <k-search
-        labelName="Buscar Local"
+        label-name="Buscar Local"
         style="width: 280px"
         @placeChanged="setPlace"
       />
       <k-button
-        @click="$store.dispatch('TOGGLE_DIALOG_ROUTER')"
         :outlined="true"
         label="Definir Rotas"
+        @click="$store.dispatch('TOGGLE_DIALOG_ROUTER')"
       />
     </section>
     <section class="aside-menu__infos">
@@ -19,25 +19,28 @@
       <a :href="details.website">{{ details.website }}</a>
       <k-rating :rating="details.rating || 0" />
       <k-button
+        label="Favoritar local"
         :disabled="!details.name"
         @click="favorited"
-        label="Favoritar local"
       />
     </section>
     <section class="aside-menu__photos">
       <section class="aside-menu__photos__carrosel">
         <img
-          loading="lazy"
           v-for="(photo, index) in details.photosUrl"
           :key="index"
           :src="photo"
-          height="200px"
           :alt="`Imagens de ${details.name}`"
+          loading="lazy"
+          height="200px"
         />
       </section>
     </section>
     <section class="aside-menu__perfil">
-      <section class="aside-menu__perfil__userdata">
+      <section
+        class="aside-menu__perfil__userdata"
+        @click="$store.dispatch('TOGGLE_DIALOG_PROFILE')"
+      >
         <img
           class="avatar"
           width="60px"
@@ -49,11 +52,11 @@
       </section>
       <section class="aside-menu__perfil__actions">
         <div
-          @click="getAllFavorites"
           class="btn-logout"
           role="button"
           title="favoritos"
           aria-label="Favoritos"
+          @click="getAllFavorites"
         >
           <img
             width="40px"
@@ -72,11 +75,11 @@
           <span>reviews</span>
         </div>
         <div
-          @click="logout"
           class="btn-logout"
           role="button"
           title="Sair"
           aria-label="Sair"
+          @click="logout"
         >
           <img width="40px" :src="require('~/assets/power.svg')" alt="logout" />
           <span>Sair</span>
@@ -90,12 +93,18 @@
 import { mapGetters } from 'vuex'
 import gMapMixin from '@/mixins/googleMethods'
 export default {
-  mixins: [gMapMixin],
   components: {
     KRating: () => import('~/components/KRating'),
     KSearch: () => import('~/components/KSearch'),
     KButton: () => import('~/components/KButton')
   },
+  mixins: [gMapMixin],
+  data: () => ({
+    currentPlace: {},
+    places: [],
+    center: [],
+    markers: []
+  }),
   computed: {
     ...mapGetters({
       favorites: 'user/USER_FAVORITES',
@@ -104,12 +113,10 @@ export default {
       details: 'CURRENT_LOCATION_DETAILS'
     })
   },
-  data: () => ({
-    currentPlace: {},
-    places: [],
-    center: [],
-    markers: []
-  }),
+
+  mounted() {
+    this.getAllFavorites()
+  },
   methods: {
     getAllFavorites() {
       this.$axios.get('/favorites').then(({ data }) => {
@@ -171,12 +178,11 @@ export default {
       })
     },
     logout() {
-      this.$router.replace('/')
+      this.$store.dispatch('LOGOUT')
+      this.$store.dispatch('user/LOGOUT')
+      this.$router.replace({ name: 'index' })
       sessionStorage.clear()
     }
-  },
-  mounted() {
-    this.getAllFavorites()
   }
 }
 </script>

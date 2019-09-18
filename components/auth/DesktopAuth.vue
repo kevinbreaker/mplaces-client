@@ -46,10 +46,17 @@ export default {
   },
   data: () => ({
     hasAccount: true,
-    email: '',
+    email: 'kevin@test.com',
     name: '',
-    password: ''
+    password: '123456'
   }),
+  watch: {
+    hasAccount() {
+      this.name = ''
+      this.email = ''
+      this.password = ''
+    }
+  },
   methods: {
     ...mapActions({ setData: 'user/SET_USER_DATA' }),
     Login() {
@@ -59,7 +66,7 @@ export default {
           this.setData({ token: data.token, ...data.user })
           this.$toast.success('Seja bem-vindo!', { duration: 4000 })
           this.$axios.setToken(data.token, 'Bearer')
-          this.$router.push('/app')
+          this.$router.push({ name: 'app' })
         })
         .catch((er) => {
           this.$toast.error(
@@ -87,14 +94,6 @@ export default {
           this.email = ''
           this.password = ''
         })
-    }
-  },
-
-  watch: {
-    hasAccount() {
-      this.name = ''
-      this.email = ''
-      this.password = ''
     }
   }
 }

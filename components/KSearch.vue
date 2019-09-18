@@ -18,8 +18,10 @@
 <script>
 export default {
   props: {
-    labelName: String,
-    default: () => 'Buscar Local'
+    labelName: {
+      type: String,
+      default: () => 'Buscar Local'
+    }
   }
 }
 </script>

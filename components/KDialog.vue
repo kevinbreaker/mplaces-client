@@ -4,20 +4,20 @@
       <header class="dialog__box__header">
         <h2 class="dialog__box__header--title">Escolha seu destino</h2>
         <div
-          @click="$store.dispatch('TOGGLE_DIALOG_ROUTER')"
           role="button"
           class="dialog__box__header--close"
+          @click="$store.dispatch('TOGGLE_DIALOG_ROUTER')"
         >
           <img
-            width="40px"
             :src="require('~/assets/close-circle.svg')"
             alt=""
+            width="40px"
           />
         </div>
       </header>
-      <k-search labelName="Local de partida" @placeChanged="started" />
-      <k-search labelName="Local de destino" @placeChanged="destination" />
-      <k-button @click="$store.dispatch('GET_ROUTER')" label="Buscar rota" />
+      <k-search label-name="Local de partida" @placeChanged="started" />
+      <k-search label-name="Local de destino" @placeChanged="destination" />
+      <k-button label="Buscar rota" @click="$store.dispatch('GET_ROUTER')" />
     </section>
   </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
   <GmapMap
+    ref="mapRef"
     :center="$store.getters['CURRENT_LOCATION']"
     :zoom="17"
-    @click="getInfo"
     map-type-id="terrain"
     class="map"
-    ref="mapRef"
+    @click="getInfo"
   >
     <GmapMarker
       v-for="(m, index) in userFavorites"
@@ -23,7 +23,7 @@
 import { mapGetters } from 'vuex'
 import gMapMixin from '@/mixins/googleMethods'
 export default {
-  middleware: 'auth',
+  // middleware: 'auth',
   mixins: [gMapMixin],
   data: () => ({
     reviews: [],
@@ -44,14 +44,14 @@ export default {
       userFavorites: 'user/USER_FAVORITES'
     })
   },
-  mounted() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setUserPosition)
-    }
-  },
   watch: {
     '$store.state.eventForRouter'() {
       this.getDirectionRoute()
+    }
+  },
+  mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setUserPosition)
     }
   },
   methods: {
@@ -101,12 +101,12 @@ export default {
             address,
             phone
           })
-          this.setMarker({
-            latLng: {
-              lat: location.lat(),
-              lng: location.lng()
-            }
-          })
+          // this.setMarker({
+          //   latLng: {
+          //     lat: location.lat(),
+          //     lng: location.lng()
+          //   }
+          // })
         }
       )
       this.$store.dispatch('SET_CURRENT_LOCATION', {
