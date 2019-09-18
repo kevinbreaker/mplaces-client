@@ -10,8 +10,8 @@
     <GmapMarker
       v-for="(m, index) in userFavorites"
       :key="index"
-      :icon="require('~/assets/heart.svg')"
       :ref="`markers-${index}`"
+      :icon="require('~/assets/heart.svg')"
       :position="{ lat: +m.lat, lng: +m.lng }"
       :clickable="true"
       :draggable="true"
@@ -26,10 +26,7 @@ export default {
   middleware: 'auth',
   mixins: [gMapMixin],
   data: () => ({
-    selectedComponent: 'search',
-    selectedPlace: '',
     reviews: [],
-    comment: '',
     infoPosition: null,
     infoContent: null,
     infoOpened: false,
@@ -60,8 +57,6 @@ export default {
   methods: {
     getInfo({ latLng, placeId, infoText, ta, xa, pixel }) {
       if (!latLng && !placeId) return
-      const apoha = this.google.maps
-      console.log(apoha)
       const map = this.$refs.mapRef.$mapObject
       const service = new this.google.maps.places.PlacesService(map)
       service.getDetails(
@@ -93,7 +88,6 @@ export default {
           },
           status
         ) => {
-          console.log(name, address, status)
           const photosUrl = photos ? photos.map((photo) => photo.getUrl()) : []
           this.$store.dispatch('SET_CURRENT_LOCATION', {
             lat: location.lat(),
@@ -115,20 +109,21 @@ export default {
           })
         }
       )
-
       this.$store.dispatch('SET_CURRENT_LOCATION', {
         lat: latLng.lat(),
         lng: latLng.lng()
       })
-      this.infoContent = 'oi'
-      this.infoPosition = { lat: latLng.lat(), lng: latLng.lng() }
+      this.infoContent = 'test content'
+      this.infoPosition = {
+        lat: latLng.lat(),
+        lng: latLng.lng()
+      }
     },
     clickMark(place) {
       if (!place) return
       if (place.id) this.getPlaceInfo(place)
     },
     setUserPosition(position) {
-      console.log('posição ', position)
       this.$store.dispatch('SET_CURRENT_LOCATION', {
         lat: position.coords.latitude,
         lng: position.coords.longitude
