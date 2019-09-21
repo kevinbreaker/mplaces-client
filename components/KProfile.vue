@@ -102,11 +102,18 @@ export default {
       }, 2000)
     },
     saveChanges() {
-      console.log({
-        name: this.name,
-        passowrd: this.newPassowrd,
-        picture: this.catImageProfile
-      })
+      this.$axios
+        .put('/user', {
+          name: this.name,
+          passowrd: this.newPassowrd,
+          picture: this.catImageProfile
+        })
+        .then(({ data: { name, picture } }) => {
+          this.$store.dispatch('user/UPDATE_PROFILE', { name, picture })
+          this.$toast.success(`Perfil alterado com sucesso, ${name}!`, {
+            duration: 4000
+          })
+        })
     }
   }
 }

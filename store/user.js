@@ -17,6 +17,10 @@ export const mutations = {
     state.picture = picture
     state.favorites = favorites
   },
+  COMMIT_UPDATE_USER_DATA(state, { name, picture }) {
+    state.name = name
+    state.picture = picture
+  },
   COMMIT_FAVORITES(state, data) {
     state.favorites = data
   },
@@ -40,6 +44,9 @@ export const actions = {
   SET_USER_DATA({ commit }, data) {
     commit('COMMIT_USER_DATA', data)
   },
+  UPDATE_PROFILE({ commit }, data) {
+    commit('COMMIT_UPDATE_USER_DATA', data)
+  },
   ADD_FAVORITE({ commit }, data) {
     commit('COMMIT_FAVORITES', data)
   },
@@ -55,7 +62,7 @@ export const actions = {
 }
 
 export const getters = {
-  USER_PROFILE: ({ name, email }) => ({ name, email }),
+  USER_PROFILE: ({ name, email, picture }) => ({ name, email, picture }),
   USER_FAVORITES: ({ favorites }) => ({ ...favorites }),
   USER_REVIEWS: ({ myReviews }) => ({ ...myReviews }),
   GET_COORDS_FOR_ROUTE: ({ origin, destination }) => ({ origin, destination }),

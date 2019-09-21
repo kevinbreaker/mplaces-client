@@ -1,5 +1,8 @@
 export default {
   mode: 'universal',
+  env: {
+    GOOGLE_KEY: process.env.GOOGLE_KEY
+  },
   /*
    ** Headers of the page
    */
@@ -45,7 +48,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    ['@nuxtjs/dotenv', { filename: '.env' }]
   ],
   toast: {
     position: 'top-center'

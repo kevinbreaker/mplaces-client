@@ -41,12 +41,7 @@
         class="aside-menu__perfil__userdata"
         @click="$store.dispatch('TOGGLE_DIALOG_PROFILE')"
       >
-        <img
-          class="avatar"
-          width="60px"
-          src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-          alt=""
-        />
+        <img class="avatar" width="60px" :src="profile.picture" alt="" />
         <p>{{ profile.name }}</p>
         <p>{{ profile.email }}</p>
       </section>
@@ -70,6 +65,7 @@
           role="button"
           title="Reviews"
           aria-label="Reviews"
+          @click="reviews"
         >
           <img width="40px" :src="require('~/assets/eye.svg')" alt="Reviews" />
           <span>reviews</span>
@@ -83,6 +79,16 @@
         >
           <img width="40px" :src="require('~/assets/power.svg')" alt="logout" />
           <span>Sair</span>
+        </div>
+        <div
+          class="btn-gps"
+          role="button"
+          title="Buscar minha localização"
+          aria-label="Minha localização"
+          @click="iAmHere"
+        >
+          <img width="40px" :src="require('~/assets/gps.svg')" alt="gps" />
+          <span>Gps</span>
         </div>
       </section>
     </section>
@@ -118,6 +124,21 @@ export default {
     this.getAllFavorites()
   },
   methods: {
+    iAmHere() {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          this.$store.dispatch('SET_CURRENT_LOCATION', {
+            lat: latitude,
+            lng: longitude
+          })
+        }
+      )
+    },
+    reviews() {
+      this.$axios.get('/user').then(({ data }) => {
+        console.log(data)
+      })
+    },
     getAllFavorites() {
       this.$axios.get('/favorites').then(({ data }) => {
         this.$store.dispatch('user/ADD_FAVORITE', data)
@@ -271,6 +292,18 @@ img
       height 100%
 
 .btn-logout
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  cursor pointer
+
+  span
+    font-weight 600
+    color white
+    cursor pointer
+
+.btn-gps
   display flex
   flex-direction column
   justify-content center

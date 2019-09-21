@@ -23,13 +23,16 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
     "@nuxtjs/toast": "^3.2.1",
+    "dotenv": "^8.1.0",
     "nuxt": "^2.0.0",
     "vue2-google-maps": "^0.10.7",
     "vuex-persist": "^2.1.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.6.0",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@vue/test-utils": "^1.0.0-beta.27",
