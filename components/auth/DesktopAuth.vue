@@ -46,9 +46,9 @@ export default {
   },
   data: () => ({
     hasAccount: true,
-    email: 'kevin@test.com',
+    email: '',
     name: '',
-    password: '123456'
+    password: ''
   }),
   watch: {
     hasAccount() {
